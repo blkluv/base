@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import AuthAndBaseTx from "@/components/AuthAndBaseTx";
-import { X } from "lucide-react"; // Make sure you have lucide-react installed
+import { X } from "lucide-react";
 
 export default function Home() {
   const [showTransfer, setShowTransfer] = useState(false);
@@ -36,11 +36,11 @@ export default function Home() {
           BLK<span className="text-[#00D632]">LUV</span>.ORG
         </h1>
         
-        <div className="flex items-center gap-2">
-            {/* 1. VS CASH APP BUTTON (Visible on Mobile) */}
+        <div className="flex items-center gap-3">
+            {/* 1. VS CASH APP BUTTON (SOLID & VISIBLE) */}
             <Link 
               href="/blkluvorg-vs-cashapp"
-              className="px-3 py-1.5 rounded-full border border-white/10 bg-white/5 text-[9px] font-bold uppercase tracking-widest hover:bg-white/10 hover:text-[#00D632] transition-colors whitespace-nowrap"
+              className="px-4 py-2 rounded-full bg-zinc-800 border border-white/20 text-[10px] font-black uppercase tracking-widest text-white shadow-lg hover:bg-zinc-700 hover:scale-105 transition-all whitespace-nowrap"
             >
               Vs Cash App
             </Link>
@@ -48,7 +48,7 @@ export default function Home() {
             {/* 2. WALLET BUTTON */}
             <button 
               onClick={() => setShowWalletModal(true)}
-              className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 transition-colors"
+              className="flex items-center gap-2 px-3 py-2 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 transition-colors"
             >
               <div className="w-1.5 h-1.5 rounded-full bg-[#00D632] animate-pulse" />
               <span className="text-[9px] font-bold uppercase tracking-widest text-zinc-300">Wallet</span>
@@ -96,16 +96,17 @@ export default function Home() {
             </div>
             
             {/* COMPARISON VISUAL */}
-            <div className="w-full h-10 bg-black rounded-md flex items-center relative overflow-hidden border border-white/10">
+            <div className="w-full h-12 bg-black rounded-md flex items-center relative overflow-hidden border border-white/10">
                 {/* Cash App Segment */}
-                <div className="h-full flex items-center justify-center bg-red-900/20 text-red-500 w-[30%] text-[10px] font-mono border-r border-white/5">
-                    <span className="mr-2 opacity-50 hidden sm:inline">CASH APP</span>
-                    <span className="mr-2 opacity-50 sm:hidden">CASH</span>
-                    -${(numAmount - cashAppReceive).toFixed(2)}
+                <div className="h-full flex items-center justify-center bg-red-900/20 text-red-500 w-[35%] text-[10px] font-mono border-r border-white/5 leading-tight">
+                    <div className="text-center">
+                        <span className="block opacity-60 font-bold uppercase mb-0.5">Cash App</span>
+                        <span>-${(numAmount - cashAppReceive).toFixed(2)}</span>
+                    </div>
                 </div>
                 {/* BLKLUV Segment */}
                 <div className="h-full flex-1 flex items-center justify-between px-4 bg-[#00D632]/5 text-[#00D632]">
-                    <span className="text-[10px] font-bold uppercase opacity-70">BLKLUV Tribe</span>
+                    <span className="text-[10px] font-bold uppercase opacity-90">BLKLUV.ORG</span>
                     <span className="font-mono text-sm font-bold">${(numAmount - 0.05).toFixed(2)}</span>
                 </div>
             </div>
@@ -137,9 +138,9 @@ export default function Home() {
       {showWalletModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
            <div className="absolute inset-0 bg-black/90 backdrop-blur-xl" onClick={() => setShowWalletModal(false)} />
-           <div className="relative w-full max-w-sm bg-[#111] border border-white/10 rounded-2xl p-8 animate-in zoom-in-95">
+           <div className="relative w-full max-w-sm bg-[#111] border border-white/10 rounded-2xl p-8 animate-in zoom-in-95 shadow-2xl">
                 
-                {/* 3. NEW CLOSE BUTTON */}
+                {/* CLOSE BUTTON */}
                 <button 
                   onClick={() => setShowWalletModal(false)}
                   className="absolute top-4 right-4 text-zinc-600 hover:text-white transition-colors"
