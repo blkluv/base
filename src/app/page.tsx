@@ -3,238 +3,112 @@
 import { useState, useEffect } from "react";
 import AuthAndBaseTx from "@/components/AuthAndBaseTx";
 
-// Reusable feature section
-function FeatureSection({
-  title,
-  subtitle,
-  body,
-  children,
-}: {
-  title: string;
-  subtitle?: string;
-  body: string;
-  children?: React.ReactNode;
-}) {
-  return (
-    <section className="space-y-3 text-left relative z-10">
-      <h2 className="text-2xl font-bold text-white tracking-tight">{title}</h2>
-      {subtitle && (
-        <p className="text-emerald-400 font-medium text-sm tracking-wide uppercase opacity-90">
-          {subtitle}
-        </p>
-      )}
-      <p className="text-emerald-100/70 text-base leading-relaxed text-balance">
-        {body}
-      </p>
-      {children && <div className="mt-4 relative z-20">{children}</div>}
-    </section>
-  );
-}
-
 export default function Home() {
   const [showTransfer, setShowTransfer] = useState(false);
-  const [showPhantomModal, setShowPhantomModal] = useState(false);
-  const [amount, setAmount] = useState<number>(100);
+  const [amount, setAmount] = useState<string>("100"); // String for direct input control
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => setMounted(true), []);
 
-  const cashAppReceive = amount * 0.965;
-  const blkluvReceive = amount - 0.2;
+  // Safe math parsing
+  const numAmount = parseFloat(amount) || 0;
+  const cashAppReceive = numAmount * 0.965; // ~3.5% fee
+  const blkluvReceive = numAmount - 0.20;   // Flat gas fee
 
   if (!mounted) return null;
 
   return (
-    <main className="relative min-h-screen w-full text-white selection:bg-emerald-500/30">
+    <main className="relative min-h-screen w-full flex flex-col font-sans">
       
-      {/* BACKGROUND LAYERS (Now strictly behind content) */}
-      <div className="bg-noise" />
-      <div className="aura-orb-1" />
-      <div className="aura-orb-2" />
+      {/* Background Ambience */}
+      <div className="bg-grain" />
+      <div className="aura-spot aura-top" />
+      <div className="aura-spot aura-bottom" />
 
-      {/* CONTENT LAYER (High Z-Index) */}
-      <div className="relative z-10 max-w-md mx-auto px-6 pb-24 pt-12 flex flex-col">
+      {/* --- HEADER --- */}
+      <nav className="relative z-10 w-full p-6 flex justify-between items-center">
+        <h1 className="text-xl font-black tracking-tighter italic">BLKLUV</h1>
+        <button className="px-4 py-2 rounded-full border border-white/10 bg-white/5 text-xs font-bold hover:bg-white/10 transition-colors">
+          Connect Wallet
+        </button>
+      </nav>
+
+      {/* --- MAIN INTERACTION (The "Hero") --- */}
+      <div className="relative z-10 flex-1 flex flex-col items-center justify-center px-6 min-h-[60vh]">
         
-        {/* HERO */}
-        <header className="space-y-6 mb-12 relative z-10">
-          <div className="inline-block px-3 py-1 rounded-full border border-emerald-500/20 bg-emerald-900/20 backdrop-blur-md">
-            <span className="text-xs font-bold tracking-widest text-emerald-300 uppercase">
-              The New Standard
-            </span>
-          </div>
-          
-          <h1 className="text-5xl font-extrabold tracking-tighter spirit-text leading-[0.9]">
-            BLK<br />LUV.ORG
-          </h1>
-
-          <p className="text-xl text-emerald-100/80 font-light leading-snug">
-            Community money.<br />
-            <span className="text-white font-normal">Zero friction. Zero banks.</span>
+        {/* The "Cash App" Style Input */}
+        <div className="relative w-full max-w-sm text-center space-y-2 animate-in fade-in zoom-in-95 duration-700">
+          <p className="text-emerald-400 font-mono text-xs uppercase tracking-widest mb-4">
+            Send to Family
           </p>
-        </header>
-
-        {/* BALANCE CARD */}
-        <section className="glass-card p-6 mb-10 neon-emerald relative z-20">
-          <div className="flex justify-between items-start">
-            <p className="text-xs font-medium text-emerald-400/80 uppercase tracking-widest">Available Balance</p>
-            <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center border border-white/10">
-              <span className="text-lg">✨</span>
-            </div>
-          </div>
-          <h2 className="text-4xl font-mono mt-4 mb-4 tracking-tight text-white">$ — — —</h2>
           
-          <div className="flex gap-3 relative z-30">
-             {/* BUTTON 1: SEND LUV */}
-             <button
-              onClick={() => { console.log("Clicked Send"); setShowTransfer(true); }}
-              className="flex-1 bg-emerald-500 text-black font-bold py-3 rounded-xl text-sm 
-                         hover:bg-emerald-400 active:scale-95 transition-all duration-200
-                         shadow-[0_0_15px_rgba(34,197,94,0.4)] cursor-pointer"
-            >
-              Send Luv 💸
-            </button>
+          <div className="relative flex items-center justify-center">
+            <span className="text-4xl sm:text-6xl font-bold text-white/40 mr-2">$</span>
+            <input
+              type="number"
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
+              placeholder="0"
+              className="input-massive max-w-[300px]"
+              autoFocus
+            />
+          </div>
+
+          {/* The "Versus" Pill */}
+          <div className="mt-8 inline-flex flex-col gap-2 w-full max-w-[280px]">
+            {/* Competitor Reality Check */}
+            <div className="flex justify-between items-center px-4 py-3 rounded-xl bg-white/5 border border-white/5 text-sm">
+              <span className="text-zinc-500">Cash App takes</span>
+              <span className="text-red-400 font-mono line-through decoration-red-500/50">
+                ${(numAmount - cashAppReceive).toFixed(2)}
+              </span>
+            </div>
             
-            {/* BUTTON 2: WALLET */}
-            <button
-              onClick={() => { console.log("Clicked Wallet"); setShowPhantomModal(true); }}
-              className="flex-1 bg-white/5 border border-white/10 text-white font-medium py-3 rounded-xl text-sm 
-                         hover:bg-white/10 active:scale-95 transition-all duration-200 cursor-pointer"
-            >
-              Wallet 🟣
-            </button>
+            {/* The Win */}
+            <div className="flex justify-between items-center px-4 py-3 rounded-xl bg-[#00D632]/10 border border-[#00D632]/20 text-sm">
+              <span className="text-[#00D632]">Tribe keeps</span>
+              <span className="text-[#00D632] font-mono font-bold">
+                ${(numAmount - 0.20).toFixed(2)}
+              </span>
+            </div>
           </div>
-        </section>
 
-        {/* SCROLLABLE CONTENT */}
-        <div className="space-y-16 relative z-10">
-          
-          <FeatureSection
-            title="Keep it in the Circle."
-            body="BLKLUV is built so your support flows directly to your people. Money moves like a text message—instant, final, and strictly between us."
-          />
-
-          <FeatureSection
-            title="The Cost of Culture."
-            subtitle="Don't let them tax your love."
-            body="See exactly how much the 'convenience' of Web2 is costing your community."
-          >
-            <div className="glass-card p-6 mt-4 space-y-6 bg-black/20 relative z-20">
-              <div className="space-y-2">
-                <label className="text-xs text-emerald-200/60 uppercase tracking-wider">Amount to Send</label>
-                <div className="relative">
-                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-emerald-400 text-xl font-light">$</span>
-                  <input
-                    type="number"
-                    min={0}
-                    value={amount}
-                    onChange={(e) => setAmount(Number(e.target.value))}
-                    className="w-full bg-black/40 border border-white/10 rounded-2xl py-4 pl-10 pr-4 text-2xl font-medium text-white focus:outline-none focus:border-emerald-500/50 transition-all relative z-30"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-3">
-                {/* Cash App Row */}
-                <div className="flex justify-between items-center p-3 rounded-xl bg-red-500/10 border border-red-500/20">
-                  <div className="flex flex-col">
-                    <span className="text-xs text-red-300 font-bold uppercase">Cash App</span>
-                    <span className="text-xs text-red-200/50">~3.5% Fees</span>
-                  </div>
-                  <div className="text-right">
-                    <span className="block text-xl font-mono text-red-200 opacity-60 line-through decoration-red-500/50">
-                      ${amount.toFixed(2)}
-                    </span>
-                    <span className="text-sm text-red-400 font-bold">
-                      Rec: ${cashAppReceive.toFixed(2)}
-                    </span>
-                  </div>
-                </div>
-
-                {/* BLKLUV Row */}
-                <div className="flex justify-between items-center p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 shadow-[0_0_10px_rgba(34,197,94,0.1)]">
-                  <div className="flex flex-col">
-                    <span className="text-xs text-emerald-300 font-bold uppercase">BLKLUV</span>
-                    <span className="text-xs text-emerald-200/50">Base Network Gas</span>
-                  </div>
-                  <div className="text-right">
-                    <span className="block text-xl font-mono text-emerald-100">
-                      ${blkluvReceive.toFixed(2)}
-                    </span>
-                     <span className="text-[10px] text-emerald-400 uppercase tracking-wider">
-                      Saved: ${(amount - cashAppReceive - 0.20).toFixed(2)}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </FeatureSection>
-
-          <FeatureSection
-            title="New Money. One App."
-            body="Phantom isn't just a crypto wallet. It's a global bank account that fits in your pocket. No permission needed."
-          >
-             <div className="mt-6 rounded-2xl overflow-hidden border border-white/10 shadow-2xl relative z-20">
-                <iframe
-                  className="w-full aspect-video grayscale hover:grayscale-0 transition-all duration-700 opacity-80 hover:opacity-100 relative z-30"
-                  src="https://www.youtube.com/embed/kOZ3sOu3AN0?controls=0&modestbranding=1"
-                  title="Phantom Cash"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                />
-            </div>
-          </FeatureSection>
         </div>
-        
-        <footer className="mt-24 pt-8 border-t border-white/5 text-center relative z-10">
-            <p className="text-emerald-200/40 text-xs">Built on Base. Secured by Math.</p>
-        </footer>
       </div>
 
-      {/* --- MODALS (Z-INDEX 50+) --- */}
-      
+      {/* --- STICKY FOOTER ACTION --- */}
+      <div className="relative z-20 w-full p-6 pb-10 bg-gradient-to-t from-black via-black/90 to-transparent">
+        <div className="max-w-md mx-auto space-y-3">
+          <button 
+            onClick={() => setShowTransfer(true)}
+            className="w-full btn-primary py-5 text-lg shadow-[0_0_40px_rgba(0,214,50,0.4)]"
+          >
+            Send Love
+          </button>
+          
+          <p className="text-center text-zinc-600 text-[10px] tracking-wide uppercase">
+            Built on Base • Secured by Math • Powered by Culture
+          </p>
+        </div>
+      </div>
+
+      {/* --- MODAL (Transfer) --- */}
       {showTransfer && (
         <div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center">
-           {/* Backdrop */}
            <div 
-             className="absolute inset-0 bg-black/80 backdrop-blur-sm cursor-pointer" 
-             onClick={() => setShowTransfer(false)} 
+             className="absolute inset-0 bg-black/90 backdrop-blur-md"
+             onClick={() => setShowTransfer(false)}
            />
-           {/* Modal Content */}
-           <div className="relative w-full max-w-md bg-zinc-900 border-t border-white/10 rounded-t-3xl p-6 shadow-2xl z-50">
+           <div className="relative w-full max-w-md bg-zinc-900 border-t border-white/10 rounded-t-3xl p-6 animate-in slide-in-from-bottom duration-300">
+              <div className="flex justify-between items-center mb-6">
+                <h3 className="text-white font-bold text-lg">Confirm Send</h3>
+                <button onClick={() => setShowTransfer(false)} className="text-zinc-500 hover:text-white">✕</button>
+              </div>
+              
               <AuthAndBaseTx />
-              <button 
-                onClick={() => setShowTransfer(false)} 
-                className="mt-6 w-full py-4 bg-zinc-800 rounded-xl text-zinc-400 text-sm hover:text-white hover:bg-zinc-700 transition-colors"
-              >
-                Close Panel
-              </button>
+              
            </div>
         </div>
-      )}
-      
-      {showPhantomModal && (
-         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <div 
-              className="absolute inset-0 bg-black/80 backdrop-blur-sm cursor-pointer" 
-              onClick={() => setShowPhantomModal(false)} 
-            />
-            <div className="glass-card relative w-full max-w-sm p-6 space-y-6 z-50">
-                <div className="text-center space-y-2">
-                   <div className="w-16 h-16 bg-purple-500/20 rounded-full mx-auto flex items-center justify-center mb-4">
-                     <span className="text-2xl">🟣</span>
-                   </div>
-                   <h3 className="text-xl font-bold">Phantom Wallet</h3>
-                   <p className="text-sm text-zinc-300">The safest way to hold your Luv.</p>
-                </div>
-                <a 
-                  href="https://phantom.app" 
-                  target="_blank"
-                  rel="noreferrer"
-                  className="block w-full bg-white text-black text-center py-4 rounded-xl font-bold hover:bg-zinc-200 transition-colors"
-                >
-                  Download App
-                </a>
-            </div>
-         </div>
       )}
 
     </main>
