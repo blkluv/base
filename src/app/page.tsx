@@ -43,11 +43,11 @@ export default function Home() {
           </button>
 
           <button
-            onClick={() => setShowTransfer(true)}
-            className="bg-white/5 border border-white/15 rounded-full py-3 text-white"
-          >
-            Support The Tribe 🖤
-          </button>
+  onClick={() => window.location.href = "/blkluv-vs-cashapp"}
+  className="bg-white/5 border border-white/15 rounded-full py-3 text-white"
+>
+  BLKLUV.ORG 🆚 Cash App
+</button>
         </div>
 
         {/* Movement Benefit Statement */}
