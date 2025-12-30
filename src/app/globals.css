@@ -4,7 +4,7 @@
 
 :root {
   --foreground-rgb: 255, 255, 255;
-  --emerald-brand: #00D632; /* The true "Cash App" Neon */
+  --emerald-brand: #00D632; 
 }
 
 html, body {
@@ -17,13 +17,13 @@ html, body {
   overflow-x: hidden;
 }
 
-/* --- 1. TEXTURE & AURA (The "Vibe") --- */
+/* --- BACKGROUNDS (LOCKED) --- */
 .bg-grain {
   position: fixed;
   inset: 0;
-  z-index: 0;
+  z-index: 0; 
   opacity: 0.07;
-  pointer-events: none;
+  pointer-events: none; /* CRITICAL: Allows clicks to pass through */
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 
@@ -34,6 +34,7 @@ html, body {
   border-radius: 50%;
   filter: blur(120px);
   z-index: -1;
+  pointer-events: none; /* CRITICAL */
   opacity: 0.3;
   animation: breathe 10s ease-in-out infinite alternate;
 }
@@ -46,65 +47,35 @@ html, body {
   100% { transform: scale(1.1); opacity: 0.5; }
 }
 
-/* --- 2. BILLION DOLLAR INPUT --- */
+/* --- UI ELEMENTS --- */
 .input-massive {
   background: transparent;
   border: none;
   outline: none;
-  font-size: 5rem; /* HUGE */
+  font-size: 5rem;
   font-weight: 700;
   letter-spacing: -0.05em;
   color: white;
   text-align: center;
   width: 100%;
   text-shadow: 0 0 40px rgba(0, 214, 50, 0.3);
-  caret-color: var(--emerald-brand); /* The cursor should match the brand */
+  caret-color: var(--emerald-brand);
 }
-
 .input-massive::placeholder { color: rgba(255, 255, 255, 0.1); }
 
-/* CRITICAL FIX: Hide the ugly browser arrows on number inputs */
+/* Hide Number Arrows */
 input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
-  -webkit-appearance: none; 
-  margin: 0; 
-}
-input[type=number] {
-  -moz-appearance: textfield; /* Firefox */
-}
+input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+input[type=number] { -moz-appearance: textfield; }
 
-/* --- 3. PREMIUM BUTTONS --- */
+/* Buttons */
 .btn-primary {
   background: var(--emerald-brand);
   color: black;
   font-weight: 800;
   letter-spacing: -0.02em;
   border-radius: 99px;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 0 30px rgba(0, 214, 50, 0.3);
-  cursor: pointer;
+  cursor: pointer; /* Ensures mouse pointer shows */
+  position: relative;
+  z-index: 50; /* Forces button above everything */
 }
-
-.btn-primary:active { transform: scale(0.96); }
-.btn-primary:hover { box-shadow: 0 0 50px rgba(0, 214, 50, 0.5); }
-
-/* --- 4. ANIMATION UTILITIES (Replaces Plugins) --- */
-/* This makes the "animate-in" classes in your React code work without plugins */
-@layer utilities {
-  .animate-in {
-    animation-duration: 0.7s;
-    animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
-    animation-fill-mode: both;
-  }
-  
-  .fade-in { animation-name: fadeIn; }
-  .zoom-in-95 { animation-name: zoomIn95; }
-  .slide-in-from-bottom { animation-name: slideInBottom; }
-}
-
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-@keyframes zoomIn95 { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
-@keyframes slideInBottom { from { transform: translateY(100%); } to { transform: translateY(0); } }
-
-/* --- 5. UTILITIES --- */
-::-webkit-scrollbar { width: 0px; background: transparent; }
