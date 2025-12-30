@@ -1,4 +1,4 @@
-@tailwind base;
+no@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
@@ -78,4 +78,17 @@ input[type=number] { -moz-appearance: textfield; }
   cursor: pointer; /* Ensures mouse pointer shows */
   position: relative;
   z-index: 50; /* Forces button above everything */
+}
+/* --- 6. FORCE SOLID BUTTONS --- */
+.btn-solid-white {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border: 1px solid rgba(255, 255, 255, 0.5) !important;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+  z-index: 50; /* Ensures it sits on top of everything */
+}
+
+.btn-solid-white:hover {
+  background-color: #e4e4e7 !important; /* Zinc-200 */
+  transform: scale(1.05);
 }
