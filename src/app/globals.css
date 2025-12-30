@@ -4,100 +4,107 @@
 
 :root {
   --foreground-rgb: 255, 255, 255;
-  --emerald-glow: 34 197 94;
+  --emerald-brand: #00D632; /* The true "Cash App" Neon */
 }
 
 html, body {
   height: 100%;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  background: #050505; /* Deep rich black, not #000 */
-  color: rgb(var(--foreground-rgb));
+  background: #000;
+  color: white;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  
-  /* SCROLL FIX: This ensures vertical scrolling works */
-  overflow-y: auto; 
+  overflow-y: auto;
   overflow-x: hidden;
 }
 
-/* --- 💸 THE BILLION DOLLAR BACKGROUND --- */
-
-/* 1. The Grain Texture (The "Matte" Finish) */
-.bg-noise {
+/* --- 1. TEXTURE & AURA (The "Vibe") --- */
+.bg-grain {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   z-index: 0;
-  opacity: 0.04; /* Subtle texture */
+  opacity: 0.07;
   pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 
-/* 2. The Animated Mesh (Depth & Movement) */
-.aura-orb-1, .aura-orb-2 {
+.aura-spot {
   position: fixed;
+  width: 800px;
+  height: 800px;
   border-radius: 50%;
-  filter: blur(80px); /* Heavy blur for depth */
+  filter: blur(120px);
   z-index: -1;
-  opacity: 0.4;
-  animation: float 10s ease-in-out infinite alternate;
+  opacity: 0.3;
+  animation: breathe 10s ease-in-out infinite alternate;
 }
 
-.aura-orb-1 {
-  top: -10%;
-  left: -10%;
-  width: 50vw;
-  height: 50vw;
-  background: radial-gradient(circle, rgba(34, 197, 94, 0.4) 0%, rgba(0,0,0,0) 70%);
-  animation-duration: 12s;
+.aura-top { top: -20%; left: -20%; background: radial-gradient(circle, #00D632 0%, transparent 70%); }
+.aura-bottom { bottom: -20%; right: -20%; background: radial-gradient(circle, #006416 0%, transparent 70%); }
+
+@keyframes breathe {
+  0% { transform: scale(1); opacity: 0.3; }
+  100% { transform: scale(1.1); opacity: 0.5; }
 }
 
-.aura-orb-2 {
-  bottom: -10%;
-  right: -10%;
-  width: 60vw;
-  height: 60vw;
-  background: radial-gradient(circle, rgba(16, 185, 129, 0.3) 0%, rgba(0,0,0,0) 70%);
-  animation-duration: 15s;
+/* --- 2. BILLION DOLLAR INPUT --- */
+.input-massive {
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 5rem; /* HUGE */
+  font-weight: 700;
+  letter-spacing: -0.05em;
+  color: white;
+  text-align: center;
+  width: 100%;
+  text-shadow: 0 0 40px rgba(0, 214, 50, 0.3);
+  caret-color: var(--emerald-brand); /* The cursor should match the brand */
 }
 
-@keyframes float {
-  0% { transform: translate(0, 0) scale(1); }
-  100% { transform: translate(20px, 40px) scale(1.1); }
+.input-massive::placeholder { color: rgba(255, 255, 255, 0.1); }
+
+/* CRITICAL FIX: Hide the ugly browser arrows on number inputs */
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+input[type=number] {
+  -moz-appearance: textfield; /* Firefox */
 }
 
-/* --- 💎 GLASS ELEMENTS --- */
-
-.glass-card {
-  background: rgba(255, 255, 255, 0.03); /* Extremely subtle fill */
-  backdrop-filter: blur(20px) saturate(180%); /* Saturation boosts the background colors */
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 1.5rem;
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+/* --- 3. PREMIUM BUTTONS --- */
+.btn-primary {
+  background: var(--emerald-brand);
+  color: black;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  border-radius: 99px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 30px rgba(0, 214, 50, 0.3);
+  cursor: pointer;
 }
 
-.neon-emerald {
-  box-shadow: 
-    0 0 0 1px rgba(34, 197, 94, 0.3),
-    0 0 40px rgba(34, 197, 94, 0.15);
-  transition: all 0.3s ease;
-}
+.btn-primary:active { transform: scale(0.96); }
+.btn-primary:hover { box-shadow: 0 0 50px rgba(0, 214, 50, 0.5); }
 
-.spirit-text {
-  text-shadow: 0 0 30px rgba(74, 222, 128, 0.4);
-}
-
-/* --- UTILITIES --- */
+/* --- 4. ANIMATION UTILITIES (Replaces Plugins) --- */
+/* This makes the "animate-in" classes in your React code work without plugins */
 @layer utilities {
-  .text-balance { text-wrap: balance; }
+  .animate-in {
+    animation-duration: 0.7s;
+    animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+    animation-fill-mode: both;
+  }
+  
+  .fade-in { animation-name: fadeIn; }
+  .zoom-in-95 { animation-name: zoomIn95; }
+  .slide-in-from-bottom { animation-name: slideInBottom; }
 }
 
-/* Scrollbar Styling */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes zoomIn95 { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+@keyframes slideInBottom { from { transform: translateY(100%); } to { transform: translateY(0); } }
+
+/* --- 5. UTILITIES --- */
+::-webkit-scrollbar { width: 0px; background: transparent; }
