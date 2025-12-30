@@ -4,37 +4,114 @@
 
 :root {
   --foreground-rgb: 255, 255, 255;
-  --background-start-rgb: 0, 0, 0;
-  --background-end-rgb: 0, 0, 0;
+  --emerald-glow: 34 197 94;
+  --emerald-soft: 74 222 128;
+  --emerald-light: 110 231 183;
+  --aura-fade: 18 24 18;
 }
 
 body {
   color: rgb(var(--foreground-rgb));
   background: black;
-  /* Font smoothing makes text look thinner and crisper on dark backgrounds */
+
+  /* Subtle matte finish */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  /* Gentle spiritual depth */
+  background-image:
+    radial-gradient(900px 600px at 50% -10%,
+      rgba(var(--emerald-glow) / 0.20),
+      transparent 60%),
+    radial-gradient(600px 400px at 50% 90%,
+      rgba(var(--emerald-soft) / 0.15),
+      transparent 70%);
 }
 
-/* Optional: Custom Scrollbar to match the dark theme */
+/* ✨ Soft Aura Card */
+.glass-card {
+  background: linear-gradient(
+    to bottom right,
+    rgba(255 255 255 / 0.06),
+    rgba(255 255 255 / 0.02)
+  );
+  border: 1px solid rgba(255 255 255 / 0.10);
+  border-radius: 1.25rem;
+  backdrop-filter: blur(12px);
+  box-shadow:
+    0 0 0 1px rgba(255 255 255 / 0.06),
+    0 0 40px rgba(var(--emerald-glow) / 0.08);
+}
+
+/* 💎 Emerald Edge Glow */
+.neon-emerald {
+  box-shadow:
+    0 0 0 1px rgba(255 255 255 / 0.12),
+    0 0 20px rgba(var(--emerald-soft) / 0.25),
+    inset 0 0 10px rgba(var(--emerald-soft) / 0.10);
+}
+
+/* 🌿 Breathing Aura Animation */
+.aura {
+  animation: auraPulse 6s ease-in-out infinite;
+}
+
+@keyframes auraPulse {
+  0% {
+    box-shadow:
+      0 0 0 0 rgba(var(--emerald-soft) / 0.25),
+      0 0 40px rgba(var(--emerald-soft) / 0.10);
+  }
+  50% {
+    box-shadow:
+      0 0 0 10px rgba(var(--emerald-soft) / 0.06),
+      0 0 80px rgba(var(--emerald-soft) / 0.22);
+  }
+  100% {
+    box-shadow:
+      0 0 0 0 rgba(var(--emerald-soft) / 0.25),
+      0 0 40px rgba(var(--emerald-soft) / 0.10);
+  }
+}
+
+/* 🕊️ Gentle Glow Text */
+.spirit-text {
+  text-shadow:
+    0 0 12px rgba(var(--emerald-light) / 0.35),
+    0 0 22px rgba(var(--emerald-soft) / 0.25);
+}
+
+/* 🌌 Mystic Divider */
+.divider-emerald {
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(var(--emerald-light) / 0.6),
+    transparent
+  );
+  height: 1px;
+  opacity: 0.8;
+}
+
+/* 🌙 Soft Scrollbar — spiritual calm */
 ::-webkit-scrollbar {
   width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #020617; /* Very dark slate */
+  background: rgb(2 6 8);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1e293b; /* Slate 800 */
-  border-radius: 4px;
+  background: rgba(74 222 128 / 0.25);
+  border-radius: 6px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #334155; /* Slate 700 */
+  background: rgba(110 231 183 / 0.35);
 }
 
-/* Utilities */
+/* Utility */
 @layer utilities {
   .text-balance {
     text-wrap: balance;
