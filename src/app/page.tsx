@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import AuthAndBaseTx from "@/components/AuthAndBaseTx"; 
+import AuthAndBaseTx from "@/components/AuthAndBaseTx";
+import { X } from "lucide-react"; // Make sure you have lucide-react installed
 
 export default function Home() {
   const [showTransfer, setShowTransfer] = useState(false);
@@ -29,33 +30,33 @@ export default function Home() {
       </div>
 
       {/* --- HEADER --- */}
-      <nav className="relative z-20 w-full p-6 flex justify-between items-center shrink-0">
-        {/* LOGO: BLK=White, LUV=Green */}
-        <h1 className="text-xl font-black tracking-tighter italic flex items-center">
+      <nav className="relative z-20 w-full p-4 flex justify-between items-center shrink-0">
+        {/* LOGO */}
+        <h1 className="text-lg font-black tracking-tighter italic flex items-center">
           BLK<span className="text-[#00D632]">LUV</span>.ORG
         </h1>
         
-        <div className="flex items-center gap-3">
-            {/* NEW: Comparison Page Button */}
+        <div className="flex items-center gap-2">
+            {/* 1. VS CASH APP BUTTON (Visible on Mobile) */}
             <Link 
               href="/blkluvorg-vs-cashapp"
-              className="hidden sm:block px-3 py-1.5 rounded-full border border-white/10 bg-white/5 text-[10px] font-bold uppercase tracking-widest hover:bg-white/10 hover:text-[#00D632] transition-colors"
+              className="px-3 py-1.5 rounded-full border border-white/10 bg-white/5 text-[9px] font-bold uppercase tracking-widest hover:bg-white/10 hover:text-[#00D632] transition-colors whitespace-nowrap"
             >
               Vs Cash App
             </Link>
 
-            {/* Wallet Info Button */}
+            {/* 2. WALLET BUTTON */}
             <button 
               onClick={() => setShowWalletModal(true)}
               className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 transition-colors"
             >
-              <div className="w-2 h-2 rounded-full bg-[#00D632] animate-pulse" />
-              <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-300">Wallet</span>
+              <div className="w-1.5 h-1.5 rounded-full bg-[#00D632] animate-pulse" />
+              <span className="text-[9px] font-bold uppercase tracking-widest text-zinc-300">Wallet</span>
             </button>
         </div>
       </nav>
 
-      {/* --- MAIN STAGE: INPUT & ACTION --- */}
+      {/* --- MAIN STAGE --- */}
       <div className="relative z-10 flex-1 flex flex-col items-center justify-center w-full max-w-md mx-auto px-6">
         
         {/* INPUT DISPLAY */}
@@ -111,32 +112,41 @@ export default function Home() {
         </div>
       </div>
 
-      {/* --- TRANSFER MODAL (Solid Background Fix) --- */}
+      {/* --- MODAL 1: SEND TRANSFER (Solid Background) --- */}
       {showTransfer && (
         <div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center">
            <div 
              className="absolute inset-0 bg-black/80 backdrop-blur-md"
              onClick={() => setShowTransfer(false)}
            />
-           {/* Modal Wrapper with SOLID #09090b Background */}
            <div className="relative w-full max-w-md bg-[#09090b] border-t sm:border border-white/10 sm:rounded-3xl rounded-t-3xl p-0 animate-in slide-in-from-bottom duration-300 shadow-2xl overflow-hidden">
               <div className="flex justify-between items-center p-4 border-b border-white/5 bg-black/40">
                  <h3 className="text-white font-bold text-sm uppercase tracking-wider">Confirm Transaction</h3>
-                 <button onClick={() => setShowTransfer(false)} className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-white/50 hover:bg-white/10">✕</button>
+                 <button onClick={() => setShowTransfer(false)} className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-white/50 hover:bg-white/10">
+                    <X size={16} />
+                 </button>
               </div>
               <div className="p-4 bg-[#09090b]">
-                  {/* Pass the amount prop here */}
                   <AuthAndBaseTx prefilledAmount={amount} />
               </div>
            </div>
         </div>
       )}
 
-      {/* --- WALLET INFO MODAL --- */}
+      {/* --- MODAL 2: WALLET INFO (With Close Button) --- */}
       {showWalletModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
            <div className="absolute inset-0 bg-black/90 backdrop-blur-xl" onClick={() => setShowWalletModal(false)} />
            <div className="relative w-full max-w-sm bg-[#111] border border-white/10 rounded-2xl p-8 animate-in zoom-in-95">
+                
+                {/* 3. NEW CLOSE BUTTON */}
+                <button 
+                  onClick={() => setShowWalletModal(false)}
+                  className="absolute top-4 right-4 text-zinc-600 hover:text-white transition-colors"
+                >
+                  <X size={20} />
+                </button>
+
                 <div className="text-center space-y-4">
                     <div className="w-14 h-14 bg-[#AB9FF2]/10 text-[#AB9FF2] rounded-full flex items-center justify-center mx-auto text-2xl">🟣</div>
                     <h3 className="text-lg font-bold text-white">Phantom Wallet</h3>
