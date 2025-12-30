@@ -37,10 +37,10 @@ export default function Home() {
         </h1>
         
         <div className="flex items-center gap-3">
-            {/* 1. VS CASH APP BUTTON (SOLID & VISIBLE) */}
+            {/* 1. VS CASH APP BUTTON (SOLID WHITE & VISIBLE) */}
             <Link 
               href="/blkluvorg-vs-cashapp"
-              className="px-4 py-2 rounded-full bg-zinc-800 border border-white/20 text-[10px] font-black uppercase tracking-widest text-white shadow-lg hover:bg-zinc-700 hover:scale-105 transition-all whitespace-nowrap"
+              className="px-4 py-2 rounded-full bg-white text-black text-[10px] font-black uppercase tracking-widest shadow-lg hover:bg-zinc-200 hover:scale-105 transition-all whitespace-nowrap"
             >
               Vs Cash App
             </Link>
@@ -97,14 +97,14 @@ export default function Home() {
             
             {/* COMPARISON VISUAL */}
             <div className="w-full h-12 bg-black rounded-md flex items-center relative overflow-hidden border border-white/10">
-                {/* Cash App Segment */}
+                {/* LEFT: Cash App Segment */}
                 <div className="h-full flex items-center justify-center bg-red-900/20 text-red-500 w-[35%] text-[10px] font-mono border-r border-white/5 leading-tight">
                     <div className="text-center">
                         <span className="block opacity-60 font-bold uppercase mb-0.5">Cash App</span>
                         <span>-${(numAmount - cashAppReceive).toFixed(2)}</span>
                     </div>
                 </div>
-                {/* BLKLUV Segment */}
+                {/* RIGHT: BLKLUV.ORG Segment */}
                 <div className="h-full flex-1 flex items-center justify-between px-4 bg-[#00D632]/5 text-[#00D632]">
                     <span className="text-[10px] font-bold uppercase opacity-90">BLKLUV.ORG</span>
                     <span className="font-mono text-sm font-bold">${(numAmount - 0.05).toFixed(2)}</span>
