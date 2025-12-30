@@ -7,29 +7,34 @@ export default function Home() {
   const [showTransfer, setShowTransfer] = useState(false);
 
   return (
-    <main className="min-h-screen flex items-center justify-center p-5 bg-black relative">
+    <main className="min-h-screen flex flex-col items-center p-4 bg-black aura-bg relative overflow-hidden">
 
-      {/* Emerald Aura Background */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_900px_at_50%_-10%,#22c55e18,transparent)]" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_700px_at_50%_90%,#4ade8030,transparent)]" />
+      {/* Floating Aura Particles */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="particle top-10 left-6" />
+        <div className="particle bottom-16 right-10" />
+        <div className="particle top-1/2 left-1/2" />
+      </div>
 
-      <div className="z-10 w-full max-w-md mx-auto space-y-8 text-center">
+      <div className="z-10 w-full max-w-md mx-auto text-center space-y-6">
 
-        {/* Brand */}
-        <h1 className="text-3xl font-bold tracking-tight text-white">
-          BLKLUV.ORG
-        </h1>
+        {/* HERO — stays at top */}
+        <div className="pt-4">
+          <h1 className="text-3xl font-bold text-white tracking-tight">
+            BLKLUV.ORG
+          </h1>
+        </div>
 
-        {/* Balance Panel — Apple Wallet style */}
-        <div className="glass-card neon-emerald aura py-8 rounded-2xl">
+        {/* Balance Card */}
+        <div className="glass-card neon-emerald aura py-6 rounded-2xl">
           <p className="text-zinc-400 text-xs mb-1">Balance</p>
-          <h2 className="text-4xl font-semibold tracking-tight text-white">
+          <h2 className="text-4xl font-semibold text-white">
             $ — — —
           </h2>
         </div>
 
         {/* Primary Actions */}
-        <div className="grid grid-cols-2 gap-3 text-sm">
+        <div className="grid grid-cols-2 gap-2 text-sm">
           <button
             onClick={() => setShowTransfer(true)}
             className="bg-emerald-400/15 border border-emerald-400/40 rounded-full py-3 text-emerald-200"
@@ -41,7 +46,7 @@ export default function Home() {
             onClick={() => setShowTransfer(true)}
             className="bg-white/5 border border-white/15 rounded-full py-3 text-white"
           >
-            Support The Tribe 💚
+            Support The Tribe 🖤
           </button>
         </div>
 
@@ -50,31 +55,31 @@ export default function Home() {
           No banks. No Cash App fees.<br />
           Support your tribe — show your Luv. #BLKLUV
         </div>
-
-        {/* Bottom-Sheet Transfer Panel */}
-        {showTransfer && (
-          <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-end">
-
-            <div className="w-full bg-black/70 border-t border-white/10 rounded-t-3xl glass-card p-4 pb-8">
-
-              {/* Drag Handle */}
-              <div className="flex justify-center mb-3">
-                <div className="w-12 h-1.5 rounded-full bg-white/20" />
-              </div>
-
-              <AuthAndBaseTx />
-
-              <button
-                onClick={() => setShowTransfer(false)}
-                className="mt-4 text-xs text-zinc-400"
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        )}
-
       </div>
+
+      {/* Bottom-Sheet Transfer Panel */}
+      {showTransfer && (
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-end">
+
+          <div className="w-full bg-black/80 border-t border-white/10 rounded-t-3xl glass-card p-4 pb-8">
+
+            {/* Drag Handle */}
+            <div className="flex justify-center mb-3">
+              <div className="w-12 h-1.5 rounded-full bg-white/25" />
+            </div>
+
+            <AuthAndBaseTx />
+
+            <button
+              onClick={() => setShowTransfer(false)}
+              className="mt-4 text-xs text-zinc-400"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+
     </main>
   );
 }
