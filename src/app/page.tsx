@@ -3,7 +3,7 @@
 import { useState } from "react";
 import AuthAndBaseTx from "@/components/AuthAndBaseTx";
 
-// Simple section wrapper for scrolling feature blocks
+// Reusable feature section
 function FeatureSection({
   title,
   subtitle,
@@ -16,7 +16,7 @@ function FeatureSection({
   children?: React.ReactNode;
 }) {
   return (
-    <section className="py-10 space-y-4 text-left">
+    <section className="py-8 space-y-3 text-left">
       <h2 className="text-2xl font-bold text-white">{title}</h2>
       {subtitle && (
         <p className="text-emerald-300/80 text-sm">{subtitle}</p>
@@ -24,7 +24,7 @@ function FeatureSection({
       <p className="text-emerald-200/75 text-sm leading-relaxed">
         {body}
       </p>
-      {children && <div className="mt-3">{children}</div>}
+      {children && <div className="mt-2">{children}</div>}
     </section>
   );
 }
@@ -34,52 +34,54 @@ export default function Home() {
   const [showPhantomModal, setShowPhantomModal] = useState(false);
   const [amount, setAmount] = useState<number>(100);
 
-  // rough, easy-to-read comparison (not exact fee table)
-  const cashAppReceive = amount * 0.965; // ~3.5% lost
-  const blkluvReceive = amount - 0.2;    // ~$0.20 Base gas
+  // simple comparison math (illustrative, not exact fee table)
+  const cashAppReceive = amount * 0.965; // lose ~3.5%
+  const blkluvReceive = amount - 0.2;    // ~0.20 gas
 
   return (
-    <main className="min-h-screen p-4 bg-black aura-bg relative overflow-x-hidden text-white">
+    <main className="min-h-screen bg-black aura-bg relative text-white overflow-y-auto">
 
-      {/* Floating Aura Particles */}
+      {/* Floating aura particles */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="particle top-10 left-6" />
         <div className="particle bottom-16 right-10" />
         <div className="particle top-1/2 left-1/2" />
       </div>
 
-      <div className="relative z-10 w-full max-w-2xl mx-auto">
+      <div className="relative z-10 max-w-2xl mx-auto px-4 pb-12">
 
         {/* HERO */}
-        <header className="pt-6 pb-8 text-center space-y-4">
-          <h1 className="text-3xl font-bold tracking-tight">
+        <header className="pt-10 pb-6 space-y-3 text-left">
+          <h1 className="text-4xl font-extrabold tracking-tight">
             BLKLUV.ORG
           </h1>
-          <p className="text-emerald-300/90 text-lg">
+
+          <p className="text-emerald-300/90 text-xl">
             The way community money should work.
           </p>
-          <p className="text-emerald-200/75 text-sm max-w-md mx-auto">
+
+          <p className="text-emerald-200/75 text-sm max-w-md">
             No banks. No Cash App fees. Support your tribe and keep more in the circle.
           </p>
 
-          <div className="grid grid-cols-1 gap-3 mt-4 text-sm">
+          <div className="mt-5 space-y-2 text-sm">
             <button
               onClick={() => setShowTransfer(true)}
-              className="bg-emerald-500/20 border border-emerald-400/50 rounded-full py-3 text-white"
+              className="w-full bg-emerald-500/20 border border-emerald-400/40 rounded-full py-3 text-white"
             >
               Send Love 💸
             </button>
 
             <button
               onClick={() => setShowPhantomModal(true)}
-              className="bg-white/5 border border-white/20 rounded-full py-3 text-white"
+              className="w-full bg-white/5 border border-white/20 rounded-full py-3 text-white"
             >
               Learn About Phantom Wallet 🟣
             </button>
 
             <button
               onClick={() => (window.location.href = "/blkluv-vs-cashapp")}
-              className="bg-white/5 border border-white/20 rounded-full py-3 text-white"
+              className="w-full bg-white/5 border border-white/20 rounded-full py-3 text-white"
             >
               BLKLUV.ORG 🆚 Cash App
             </button>
@@ -87,17 +89,15 @@ export default function Home() {
         </header>
 
         {/* BALANCE CARD */}
-        <section className="glass-card neon-emerald aura py-7 px-5 rounded-2xl text-center">
-          <p className="text-zinc-400 text-xs mb-1">Balance</p>
-          <h2 className="text-4xl font-semibold tracking-tight text-white">
-            $ — — —
-          </h2>
-          <p className="text-emerald-200/70 text-xs mt-3">
+        <section className="mt-2 mb-6 bg-white/5 border border-white/10 rounded-2xl p-5">
+          <p className="text-xs text-zinc-400 mb-1">Balance</p>
+          <h2 className="text-3xl font-semibold">$ — — —</h2>
+          <p className="text-emerald-200/70 text-xs mt-2">
             Your money. Your people. No middleman.
           </p>
         </section>
 
-        {/* SCROLLING FEATURE SECTIONS */}
+        {/* FEATURE SECTIONS */}
 
         {/* 1. Community Money */}
         <FeatureSection
@@ -109,7 +109,7 @@ export default function Home() {
           </p>
         </FeatureSection>
 
-        {/* 2. Phantom Wallet + New Money Experience */}
+        {/* 2. Phantom Wallet + New Money */}
         <FeatureSection
           title="Phantom Wallet + BLKLUV = New Money"
           subtitle="One place for all your money, onchain and off."
@@ -117,11 +117,11 @@ export default function Home() {
         >
           <ul className="text-sm text-emerald-200 space-y-1">
             <li>⚡ Add money from bank or card in a few taps.</li>
-            <li>🔁 Move between crypto and stable value without leaving the app.</li>
+            <li>🔁 Move between crypto and stable value without extra apps.</li>
             <li>🌍 Pay friends instantly using Phantom usernames.</li>
-            <li>💳 Use your balance anywhere Visa works with Phantom’s debit experience.</li>
+            <li>💳 Use your balance anywhere Visa works with Phantom’s debit flow.</li>
             <li>🧾 Get paid into your wallet with virtual account details.</li>
-            <li>🟣 Perks and rewards on eligible balances coming soon.</li>
+            <li>🟣 Perks and rewards on eligible balances rolling out over time.</li>
           </ul>
 
           <div className="mt-4 space-y-3">
@@ -144,7 +144,7 @@ export default function Home() {
           subtitle="Cash App vs BLKLUV. Same love. Different outcome."
           body="Type any amount and see how much more your people keep when you skip the middleman."
         >
-          <div className="glass-card p-5 rounded-2xl space-y-3">
+          <div className="glass-card p-5 rounded-2xl space-y-3 bg-black/40 border border-white/10">
             <label className="block text-xs text-emerald-200/80 mb-1">
               How much do you want to send?
             </label>
@@ -156,7 +156,7 @@ export default function Home() {
                 const v = Number(e.target.value);
                 setAmount(Number.isNaN(v) ? 0 : v);
               }}
-              className="w-full bg-black/40 border border-white/15 rounded-xl px-3 py-2 text-sm outline-none focus:border-emerald-400/80"
+              className="w-full bg-black/60 border border-white/15 rounded-xl px-3 py-2 text-sm outline-none focus:border-emerald-400/80"
             />
 
             <div className="space-y-1 text-sm">
@@ -180,7 +180,7 @@ export default function Home() {
           </div>
         </FeatureSection>
 
-        {/* 4. Social Challenge / Movement */}
+        {/* 4. Social Challenge */}
         <FeatureSection
           title="#BLKLUVORG Challenge"
           subtitle="Who shows the most Luv for their tribe?"
@@ -196,20 +196,20 @@ export default function Home() {
           </p>
         </FeatureSection>
 
-        {/* 5. Quick “What You Need” Wallet Checklist */}
+        {/* 5. Quick “What you need” */}
         <FeatureSection
           title="What you need to get started."
           body="BLKLUV is simple: one wallet, a little ETH on Base, and people you care about."
         >
-          <div className="glass-card neon-emerald aura p-4 rounded-2xl space-y-2 text-sm text-emerald-100">
-            <p>🟣 <b>Download Phantom Wallet</b> on iOS or Android.</p>
+          <div className="bg-white/5 border border-white/10 rounded-2xl p-4 space-y-2 text-sm text-emerald-100">
+            <p>🟣 Download Phantom Wallet on iOS or Android.</p>
             <p>⚡ Add a small amount of ETH on the Base network.</p>
             <p>🖤 Connect at BLKLUV.ORG and start sending Love.</p>
           </div>
         </FeatureSection>
 
-        {/* Movement line at bottom */}
-        <footer className="py-8 text-center">
+        {/* Footer movement line */}
+        <footer className="pt-4 pb-6 text-center">
           <p className="text-emerald-300/80 text-xs">
             No banks. No Cash App fees. Support your tribe — show your Luv. #BLKLUV
           </p>
