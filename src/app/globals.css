@@ -5,138 +5,99 @@
 :root {
   --foreground-rgb: 255, 255, 255;
   --emerald-glow: 34 197 94;
-  --emerald-soft: 74 222 128;
-  --emerald-light: 110 231 183;
 }
 
-body {
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background: #050505; /* Deep rich black, not #000 */
   color: rgb(var(--foreground-rgb));
-  background: #000000;
-  /* Ultra-smooth font rendering for the "Premium" feel */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  
+  /* SCROLL FIX: This ensures vertical scrolling works */
+  overflow-y: auto; 
   overflow-x: hidden;
 }
 
-/* --- 🔮 THE AURA ENGINE --- */
+/* --- 💸 THE BILLION DOLLAR BACKGROUND --- */
 
-/* The animated background mesh */
-.aura-bg {
-  background-color: #000;
-  background-image: 
-    radial-gradient(at 0% 0%, rgba(34, 197, 94, 0.15) 0px, transparent 50%),
-    radial-gradient(at 100% 0%, rgba(16, 185, 129, 0.1) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, rgba(5, 150, 105, 0.15) 0px, transparent 50%),
-    radial-gradient(at 0% 100%, rgba(34, 197, 94, 0.1) 0px, transparent 50%);
-  background-size: 140% 140%;
-  animation: auraShift 15s ease infinite;
+/* 1. The Grain Texture (The "Matte" Finish) */
+.bg-noise {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  opacity: 0.04; /* Subtle texture */
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 
-@keyframes auraShift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+/* 2. The Animated Mesh (Depth & Movement) */
+.aura-orb-1, .aura-orb-2 {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(80px); /* Heavy blur for depth */
+  z-index: -1;
+  opacity: 0.4;
+  animation: float 10s ease-in-out infinite alternate;
 }
 
-/* --- 💎 GLASSMORPHISM --- */
+.aura-orb-1 {
+  top: -10%;
+  left: -10%;
+  width: 50vw;
+  height: 50vw;
+  background: radial-gradient(circle, rgba(34, 197, 94, 0.4) 0%, rgba(0,0,0,0) 70%);
+  animation-duration: 12s;
+}
+
+.aura-orb-2 {
+  bottom: -10%;
+  right: -10%;
+  width: 60vw;
+  height: 60vw;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.3) 0%, rgba(0,0,0,0) 70%);
+  animation-duration: 15s;
+}
+
+@keyframes float {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(20px, 40px) scale(1.1); }
+}
+
+/* --- 💎 GLASS ELEMENTS --- */
 
 .glass-card {
-  background: rgba(20, 20, 20, 0.6);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: rgba(255, 255, 255, 0.03); /* Extremely subtle fill */
+  backdrop-filter: blur(20px) saturate(180%); /* Saturation boosts the background colors */
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 1.5rem; /* Larger, softer corners like iOS */
-  box-shadow: 
-    0 4px 30px rgba(0, 0, 0, 0.1),
-    inset 0 0 20px rgba(255, 255, 255, 0.02);
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
 }
 
-/* The glowing emerald border effect */
 .neon-emerald {
   box-shadow: 
-    0 0 0 1px rgba(34, 197, 94, 0.2),
-    0 0 20px rgba(34, 197, 94, 0.15);
-  transition: box-shadow 0.3s ease;
+    0 0 0 1px rgba(34, 197, 94, 0.3),
+    0 0 40px rgba(34, 197, 94, 0.15);
+  transition: all 0.3s ease;
 }
 
-.neon-emerald:hover {
-  box-shadow: 
-    0 0 0 1px rgba(34, 197, 94, 0.4),
-    0 0 30px rgba(34, 197, 94, 0.25);
-}
-
-/* Glowing Text */
 .spirit-text {
-  text-shadow: 0 0 20px rgba(74, 222, 128, 0.5);
+  text-shadow: 0 0 30px rgba(74, 222, 128, 0.4);
 }
 
-/* --- 🚀 ANIMATION UTILITIES (Replaces Plugins) --- */
-
+/* --- UTILITIES --- */
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-  
-  /* Smooth Entrance Animations */
-  .animate-in {
-    animation-duration: 0.6s;
-    animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1); /* Apple-style ease */
-    animation-fill-mode: both;
-  }
-
-  .fade-in {
-    animation-name: fadeIn;
-  }
-
-  .slide-in-from-bottom-4 {
-    animation-name: slideInBottom;
-  }
-  
-  .slide-in-from-bottom {
-    animation-name: slideInPanel;
-  }
-  
-  .zoom-in-95 {
-    animation-name: zoomIn;
-  }
+  .text-balance { text-wrap: balance; }
 }
 
-/* Keyframes for the manual animations above */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes slideInBottom {
-  from { transform: translateY(1rem); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
-
-@keyframes slideInPanel {
-  from { transform: translateY(100%); }
-  to { transform: translateY(0); }
-}
-
-@keyframes zoomIn {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
-}
-
-/* --- 📱 SCROLLBAR HIDING (For App Feel) --- */
-
-::-webkit-scrollbar {
-  width: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.2);
-}
+/* Scrollbar Styling */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
